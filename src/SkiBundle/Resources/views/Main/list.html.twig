@@ -1,0 +1,13 @@
+{% extends 'materialize/layout.html.twig' %}
+{% block title %}Liste des stations{% endblock %}
+
+{% block content %}
+  <h3>Liste des stations</h3>
+  <ul>
+      {% for station in stations %}
+          <li><a href="{{ path('detail_action', {'stationId': station.id}) }}">{{ station.name }}</a></li>
+      {% else %}
+          Aucun avis.
+      {% endfor %}
+  <ul>
+{% endblock %}

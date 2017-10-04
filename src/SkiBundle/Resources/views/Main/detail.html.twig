@@ -1,0 +1,11 @@
+{% extends 'materialize/layout.html.twig' %}
+{% block title %}Liste des avis{% endblock %}
+
+{% block content %}
+  <h3>Liste des avis pour {{ station.name }}</h3>
+  {% for review in station.reviews %}
+    Auteur: <b>{{ review.user }}</b><br>
+    Note: <b>{{ review.notation }}/5</b><br>
+    <b>{{ review.review }}</b><hr>
+  {% endfor %}
+{% endblock %}

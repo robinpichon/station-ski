@@ -1,0 +1,8 @@
+{% extends 'materialize/layout.html.twig' %}
+{% block title %}Avis #{{ review.id }}{% endblock %}
+
+{% block content %}
+    User: <b>{{ review.userId }}</b><br>
+    Note: <b>{{ review.notation }}/5</b><br>
+    <b>{{ review.comment }}</b><hr>
+{% endblock %}

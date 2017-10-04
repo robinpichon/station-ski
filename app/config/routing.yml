@@ -1,3 +1,4 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+cat:
+    resource: "@SkiBundle/Controller/"
+    type:     annotation
+    prefix:   /
