@@ -1,6 +1,6 @@
 <?php
 
-namespace CatBundle\Tests\Controller;
+namespace SkiBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

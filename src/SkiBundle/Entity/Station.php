@@ -29,11 +29,18 @@ class Station
     private $name;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="reviews", type="simple_array")
+     * @ORM\Column(name="description", type="string", length=255)
      */
-    private $reviews;
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255)
+     */
+    private $image;
 
 
     /**
@@ -71,26 +78,50 @@ class Station
     }
 
     /**
-     * Set reviews
+     * Set description
      *
-     * @param array $reviews
+     * @param string $description
      *
      * @return Station
      */
-    public function setReviews($reviews)
+    public function setDescription($description)
     {
-        $this->reviews = $reviews;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get reviews
+     * Get description
      *
-     * @return array
+     * @return string
      */
-    public function getReviews()
+    public function getDescription()
     {
-        return $this->reviews;
+        return $this->description;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Station
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

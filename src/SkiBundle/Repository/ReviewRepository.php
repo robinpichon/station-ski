@@ -10,4 +10,12 @@ namespace SkiBundle\Repository;
  */
 class ReviewRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getReviews($stationId)
+    {
+        return $this->createQueryBuilder('review')
+                    ->andWhere('review.stationId = :stationid')
+                    ->setParameter('stationid', $stationId)
+                    ->getQuery()
+                    ->execute();
+    }
 }

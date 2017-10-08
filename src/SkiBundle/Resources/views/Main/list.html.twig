@@ -7,7 +7,7 @@
       {% for station in stations %}
           <li><a href="{{ path('detail_action', {'stationId': station.id}) }}">{{ station.name }}</a></li>
       {% else %}
-          Aucun avis.
+          Aucun station.
       {% endfor %}
   <ul>
 {% endblock %}
