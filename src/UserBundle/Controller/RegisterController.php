@@ -43,6 +43,7 @@ class RegisterController extends Controller
                     ->setLastname($data['lastname'])
                     ->setEmail($data['email'])
                     ->setPassword($passwordEncoder->encodePassword($user, $data['password']))
+                    ->setAvatar('default.png')
                     ->setRoles(['ROLE_USER']);
 
                 $em->persist($user);
