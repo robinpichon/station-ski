@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use SkiBundle\Entity\Station;
 use SkiBundle\Entity\Review;
+use SkiBundle\Entity\User;
 
 class SkiFixturesCommand extends ContainerAwareCommand
 {
@@ -17,39 +18,54 @@ class SkiFixturesCommand extends ContainerAwareCommand
         $this
             ->setName('ski:fixtures')
             ->setDescription('Chargement du jeu d\'essai.')
-            ->addArgument('nbGenerate', InputArgument::REQUIRED, 'Nombre d\'entrées à générer.')
+            //->addArgument('nbGenerate', InputArgument::REQUIRED, 'Nombre d\'entrées à générer.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Génération de 3 stations et '.$input->getArgument('nbGenerate').' reviews...');
+        $output->writeln('Génération de 3 stations, 5 users et 10 reviews...');
         $stations = ['Aussois', 'Avoriaz', 'Les 2 alpes'];
         $comments = ['Super !', 'Très satisfait.', 'Nul.', 'Fuyez !', 'Bof bof'];
 
-        //$em = $this->getDoctrine()->getManager();
+        $passwordEncoder = $this->getContainer()->get('security.password_encoder');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         // Génération des stations
         foreach($stations as $key => $value) {
             $station = new Station();
-            $station->setName($value);
-            $station->setDescription('Description de la station');
-            $station->setImage(strtolower($value).'.jpg');
-            $em->persist($station); // Mettre dans la file d'attente
+            $station->setName($value)
+                    ->setDescription('Description de la station')
+                    ->setImage(str_replace(' ', '', strtolower($value).'.jpg'));
+
+            $em->persist($station);
+        }
+
+        // Génération des users
+        for($i = 0; $i <= 5; $i++) {
+            $user = new User();
+            $user->setFirstname('Test')
+                ->setLastname('Test')
+                ->setEmail('test'.$i.'@test.fr')
+                ->setPassword($passwordEncoder->encodePassword($user, 'test123'))
+                ->setAvatar('default.png')
+                ->setRoles(['ROLE_USER']);
+
+            $em->persist($user);
         }
 
         // Génération des reviews
-        for($i = 0; $i <= $input->getArgument('nbGenerate'); $i++) {
+        for($i = 0; $i <= 10; $i++) {
             $review = new Review();
-            $review->setStationId(rand(1, 3));
-            $review->setUserId(rand(1, 10));
-            $review->setNotation(rand(1, 5));
-            $review->setComment($comments[rand(1, count($comments))-1]);
-            $em->persist($review); // Mettre dans la file d'attente
+            $review->setStation($station)
+                    ->setUser($user)
+                    ->setNotation(rand(1, 5))
+                    ->setComment($comments[rand(1, count($comments))-1]);
+
+            $em->persist($review);
         }
 
-        $em->flush(); // Inserer les objets en file d'attente dans la base de données
+        $em->flush();
         $output->writeln('<info>Génération OK.</info>');
     }
 

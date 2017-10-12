@@ -42,6 +42,10 @@ class Station
      */
     private $image;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Review", mappedBy="station")
+    */
+    private $reviews;
 
     /**
      * Get id
@@ -123,5 +127,15 @@ class Station
     public function getImage()
     {
         return $this->image;
+    }
+
+    public function setReviews($reviews)
+    {
+        $this->reviews = $reviews;
+    }
+
+    public function getReviews()
+    {
+        return $this->reviews;
     }
 }

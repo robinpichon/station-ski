@@ -4,8 +4,12 @@ start:
 stop:
 	bin/console server:stop
 
-fix:
+install:
+	composer install
+	make fixtures
+
+fixtures:
 	bin/console doctrine:database:drop --force
 	bin/console doctrine:database:create
 	bin/console doctrine:schema:update --force
-	bin/console cat:fix 5
+	bin/console ski:fixtures

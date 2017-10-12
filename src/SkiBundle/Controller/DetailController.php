@@ -8,7 +8,9 @@ use SkiBundle\Repository\ReviewRepository;
 use SkiBundle\Entity\Station;
 use SkiBundle\Entity\Review;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DetailController extends Controller
 {
@@ -17,30 +19,60 @@ class DetailController extends Controller
    */
    public function detailAction($stationId)
    {
+      $request = Request::createFromGlobals();
       $stationRepository = $this->getDoctrine()->getRepository(Station::class);
       $station = $stationRepository->findOneById($stationId);
+      $reviews = $station->getReviews();
+      //$moyenne = $this->getAverageNotation($reviews);
 
-      $reviewRepository = $this->getDoctrine()->getRepository(Review::class);
-      $reviews = $reviewRepository->getReviews($stationId);
+      $review = new Review();
+      $form = $this->createFormBuilder()
+          ->add('notation', IntegerType::class)
+          ->add('comment', TextareaType::class)
+          ->add('save', SubmitType::class)
+          ->getForm();
 
-      $request = Request::createFromGlobals();
+      $form->handleRequest($request);
+      if($form->isSubmitted() && $form->isValid()) {
+          $data = $form->getData();
+
+          $em = $this->getDoctrine()->getManager();
+          $review->setUser($this->getUser())
+                  ->setStation($station)
+                  ->setNotation($data['notation'])
+                  ->setComment($data['comment']);
+
+          $em->persist($review);
+          $em->flush();
+
+          $this->get('session')->getFlashBag()->add('success', 'Commentaire enregistré avec succès.');
+          return $this->redirect($request->getUri());
+      }
+
       $sort = $request->query->get('sort');
       if(!empty($sort) && $sort === 'rating') {
-          //$reviews = $station->getReviews();
           usort($reviews, function($a, $b) {
             return $a->getNotation() <=> $b->getNotation();
           });
-
-          //$station->setReviews($reviews);
       }
 
       if($station !== null) {
           return $this->render('SkiBundle:Main:detail.html.twig', array(
             'station' => $station,
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            //'moyenne' => $moyenne,
+            'form' =>  $form->createView()
           ));
       } else {
           return $this->render('SkiBundle:Error:404.html.twig');
       }
    }
+
+   /*public function getAverageNotation($reviews) {
+      $total = 0;
+      foreach ($reviews as $review) {
+          $total += $review->getNotation();
+      }
+      $total = $total/count($reviews);
+   }*/
 }

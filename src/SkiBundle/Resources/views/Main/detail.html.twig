@@ -7,28 +7,70 @@
     <div class="col s6">
       <div class="card">
         <div class="card-image">
-          <img src="{{ asset('img/' ~ station.image) }}">
-          <!--<span class="card-title">Card Title</span>-->
+          <img src="{{ asset('bundles/ski/img/station/' ~ station.image) }}">
         </div>
         <div class="card-content">
+          <div class="secondary-content" style="font-size: 1.3em;">
+            <b>{# moyenne #}</b>/5
+          </div>
           <p>{{ station.description }}</p>
         </div>
-        <!--<div class="card-action">
-          <a href="#">This is a link</a>
-        </div>-->
       </div>
     </div>
     <div class="col s6">
+
+      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          <a class="waves-effect waves-light btn-large modal-trigger" href="#newComment" style="width: 100%; margin-top: 8px;">
+      {% else %}
+          <a class="btn-large tooltipped" data-position="top" data-delay="50" data-tooltip="Vous devez être connecté pour écrire un commentaire." style="width: 100%; margin-top: 8px; background-color: lightgrey;">
+      {% endif %}
+          <i class="material-icons left">edit</i>écrire un commentaire
+      </a>
+
       <ul class="collection">
         {% for review in reviews %}
           <li class="collection-item avatar">
-            <img src="{{ asset('img/user.png') }}" alt="" class="circle">
-            <span class="title">Prénom N. ({{ review.userId }})</span>
+            <img src="{{ asset('bundles/ski/img/avatars/' ~ review.user.avatar) }}" alt="" class="circle">
+            <span class="title">{{ review.user.firstname }} {{ review.user.lastname|upper }}</span>
             <p>{{ review.comment }}</p>
-            <a href="#!" class="secondary-content">{{ review.notation }}/5 <!--<i class="material-icons">grade</i>--></a>
+            <div class="secondary-content">{{ review.notation }}/5</div>
           </li>
+        {% else %}
+          <center>Aucun commentaire.</center>
         {% endfor %}
       </ul>
     </div>
+
+    <div id="newComment" class="modal">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="modal-content">
+                <h4>Commentaire</h4>
+                <p>Vous postez un commentaire en tant que <b>{{ app.user.firstname }} {{ app.user.lastname }}</b>.</p>
+                {{ form_start(form) }}
+                <div class="input-field">
+                  {{ form_widget(form.notation, {'attr': {'class': 'validate'}}) }}
+                  {{ form_label(form.notation, "Note") }}
+                </div>
+                <div class="input-field">
+                  {{ form_widget(form.comment, {'attr': {'class': 'materialize-textarea'}}) }}
+                  {{ form_label(form.comment, "Commentaire") }}
+                </div>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Fermer</a>
+              {{ form_widget(form.save, {'label': 'Envoyer', 'attr': {'class': 'modal-action waves-effect waves-green btn'}}) }}
+              {{ form_rest(form) }}
+              {{ form_end(form) }}
+            </div>
+        {% endif %}
+    </div>
   </div>
+
+  <script>
+    // intialize js components
+    $(document).ready(function(){
+        $('.tooltipped').tooltip({delay: 50});
+        $('.modal').modal();
+    });
+  </script>
 {% endblock %}

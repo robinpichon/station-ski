@@ -1,0 +1,16 @@
+{% extends 'materialize/layout.html.twig' %}
+{% block title %}Mon compte{% endblock %}
+
+{% block content %}
+  <div class="row">
+      <h4>Mon compte</h4>
+      <p>Bienvenue sur votre espace personnel.</p>
+      <div class="card">
+        <div class="card-content">
+          <p>ID: <b>{{ app.user.id }}</b></p>
+          <p>Nom complet: <b>{{ app.user.firstname }} {{ app.user.lastname }}</b></p>
+          <p>Adresse mail: <b>{{ app.user.email }}</b></p>
+        </div>
+      </div>
+  </div>
+{% endblock %}

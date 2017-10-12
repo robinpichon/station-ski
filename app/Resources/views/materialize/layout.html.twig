@@ -2,24 +2,54 @@
   <head>
     {% block head_metas %}
            <meta charset="utf-8">
-     {% endblock %}
+    {% endblock %}
     <title>{% block title '' %} - CriticSki</title>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <!-- Main custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/ski/css/materialize.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/ski/css/main.css') }}" />
+    <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" src="{{ asset('bundles/ski/js/jquery-3.2.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/ski/js/materialize.min.js') }}"></script>
   </head>
   <body>
     <nav class="light-blue lighten-1" role="navigation">
-      <div class="nav-wrapper container"><a id="logo-container" href="{{ path('index_action') }}" class="brand-logo">CriticSki</a>
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="{{ path('index_action') }}" class="brand-logo">CriticSki</a>
+
         <ul class="right hide-on-med-and-down">
-          <li><a href="{{ path('list_action') }}">Liste des stations</a></li>
+          <li><a href="{{ path('list_action') }}"><i class="material-icons left">view_list</i> Liste des stations</a></li>
+          <li>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              <ul id="dropdown1" class="dropdown-content">
+                <li><a href="{{ path('account') }}">Mon compte</a></li>
+                <li><a href="#!">Mes avis</a></li>
+                <li class="divider"></li>
+                <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+              </ul>
+
+              <a class="dropdown-button" href="#!" data-activates="dropdown1">
+                <i class="material-icons left">account_circle</i>{{ app.user.firstname }} {{ app.user.lastname|upper }}<i class="material-icons right">arrow_drop_down</i>
+              </a>
+            {% else %}
+              <ul id="dropdown1" class="dropdown-content">
+                <li><a href="{{ path('login') }}">Connexion</a></li>
+                <li><a href="{{ path('register') }}">Créer un compte</a></li>
+              </ul>
+
+              <a class="dropdown-button" href="#!" data-activates="dropdown1">
+                <i class="material-icons left">account_circle</i>Connexion<i class="material-icons right">arrow_drop_down</i>
+              </a>
+            {% endif %}
+          </li>
+
         </ul>
-        <ul id="nav-mobile" class="side-nav">
-          <li><a href="{{ path('list_action') }}">Liste des stations</a></li>
-        </ul>
+
+        <!--<ul id="nav-mobile" class="side-nav">
+          <li><a href="{{ path('list_action') }}"><i class="material-icons left">view_list</i> Liste des stations</a></li>
+          <li><a href="#"><i class="material-icons left">account_circle</i> Connexion</a></li>
+        </ul>-->
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
       </div>
     </nav>
@@ -32,6 +62,14 @@
         <br><br>
       </div>
     </main>
+
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <script>
+            window.onload = function () {
+                Materialize.toast('{{ flashMessage }}', 4000, 'green')
+            };
+        </script>
+    {% endfor %}
 
     <footer class="page-footer orange">
       <div class="container">
@@ -49,7 +87,7 @@
           <div class="col l3 s12">
             <h5 class="white-text">Mon compte</h5>
             <ul>
-              <li><a class="white-text" href="#!">Mes informations</a></li>
+              <li><a class="white-text" href="{{ path('account') }}">Mon compte</a></li>
               <li><a class="white-text" href="#!">Mes avis</a></li>
             </ul>
           </div>
@@ -61,9 +99,5 @@
         </div>
       </div>
     </footer>
-
-    <!-- Compiled and minified JavaScript -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   </body>
 </html>

@@ -22,18 +22,16 @@ class Review
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="station_id", type="integer")
-     */
-    private $stationId;
+    * @ORM\ManyToOne(targetEntity= "Station", inversedBy="reviews")
+    * @ORM\JoinColumn(name="station_id", referencedColumnName="id")
+    */
+    private $station;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="user_id", type="integer")
+    * @ORM\ManyToOne(targetEntity= "User", inversedBy="reviews")
+    * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $userId;
+    private $user;
 
     /**
      * @var int
@@ -45,7 +43,7 @@ class Review
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="string", length=255)
+     * @ORM\Column(name="comment", type="text")
      */
     private $comment;
 
@@ -60,52 +58,26 @@ class Review
         return $this->id;
     }
 
-    /**
-     * Set station id
-     *
-     * @param integer $stationId
-     *
-     * @return Review
-     */
-    public function setStationId($stationId)
+    public function setStation(Station $station)
     {
-        $this->stationId = $stationId;
-
+        $this->station = $station;
         return $this;
     }
 
-    /**
-     * Get station id
-     *
-     * @return int
-     */
-    public function getStationId()
+    public function getStation()
     {
-        return $this->stationId;
+        return $this->station;
     }
 
-    /**
-     * Set user id
-     *
-     * @param integer $userId
-     *
-     * @return Review
-     */
-    public function setUserId($userId)
+    public function setUser(User $user)
     {
-        $this->userId = $userId;
-
+        $this->user = $user;
         return $this;
     }
 
-    /**
-     * Get user id
-     *
-     * @return int
-     */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**

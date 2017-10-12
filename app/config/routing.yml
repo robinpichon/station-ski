@@ -1,4 +1,12 @@
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 cat:
     resource: "@SkiBundle/Controller/"
     type:     annotation
     prefix:   /
+
+logout:
+    path: /logout

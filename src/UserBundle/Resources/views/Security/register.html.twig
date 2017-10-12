@@ -1,0 +1,51 @@
+{% extends 'materialize/layout.html.twig' %}
+{% block title %}Créer un compte{% endblock %}
+
+{% block content %}
+  <div class="row">
+      <h4>Créer un compte</h4>
+
+      {{ form_start(form) }}
+
+      {% if not form.vars.valid %}
+      <div id="card-alert" class="card red">
+        <div class="card-content white-text">
+          <p>{{ form_errors(form) }}</p>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="input-field">
+        {{ form_widget(form.firstname, {'attr': {'class': 'validate'}}) }}
+        {{ form_label(form.firstname, "Prénom") }}
+        {{ form_errors(form.firstname, {'attr': {'class': 'error'}}) }}
+      </div>
+      <div class="input-field">
+        {{ form_widget(form.lastname, {'attr': {'class': 'validate'}}) }}
+        {{ form_label(form.lastname, "Nom") }}
+        {{ form_errors(form.lastname, {'attr': {'class': 'error'}}) }}
+      </div>
+      <div class="input-field">
+        {{ form_widget(form.email, {'attr': {'class': 'validate'}}) }}
+        {{ form_label(form.email, "Adresse mail") }}
+        {{ form_errors(form.email, {'attr': {'class': 'error'}}) }}
+      </div>
+      <div class="input-field">
+        {{ form_widget(form.password.first, {'attr': {'class': 'validate'}}) }}
+        {{ form_label(form.password.first, "Mot de passe") }}
+        {{ form_errors(form.password.first, {'attr': {'class': 'error'}}) }}
+      </div>
+      <div class="input-field">
+        {{ form_widget(form.password.second, {'attr': {'class': 'validate'}}) }}
+        {{ form_label(form.password.second, "Confirmer le mot de passe") }}
+        {{ form_errors(form.password.second, {'attr': {'class': 'error'}}) }}
+      </div>
+
+      <div class="g-recaptcha" data-sitekey="6LcpBDQUAAAAAA024vE3S04JHYQkwyuT0l2A2cUG"></div>
+      {{ form_widget(form.save, {'label': 'Valider', 'attr': {'class': 'modal-action waves-effect waves-green btn', 'style': 'margin-top: 10px'}}) }}
+
+      {{ form_rest(form) }}
+      {{ form_end(form) }}
+  </div>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}
