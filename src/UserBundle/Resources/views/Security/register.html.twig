@@ -8,9 +8,9 @@
       {{ form_start(form) }}
 
       {% if not form.vars.valid %}
-      <div id="card-alert" class="card red">
+      <div id="card-alert" class="card red" style="margin-bottom: 30px;">
         <div class="card-content white-text">
-          <p>{{ form_errors(form) }}</p>
+          <p>{{ "Une ou plusieurs erreurs ont été détectées dans le formulaire." }}<br>{{ form_errors(form)|trim('<ul><li>')|trim('</li></ul>') }}</p>
         </div>
       </div>
       {% endif %}
@@ -18,27 +18,27 @@
       <div class="input-field">
         {{ form_widget(form.firstname, {'attr': {'class': 'validate'}}) }}
         {{ form_label(form.firstname, "Prénom") }}
-        {{ form_errors(form.firstname, {'attr': {'class': 'error'}}) }}
+        <font color="red">{{ form_errors(form.firstname) }}</font>
       </div>
       <div class="input-field">
         {{ form_widget(form.lastname, {'attr': {'class': 'validate'}}) }}
         {{ form_label(form.lastname, "Nom") }}
-        {{ form_errors(form.lastname, {'attr': {'class': 'error'}}) }}
+        <font color="red">{{ form_errors(form.lastname) }}</font>
       </div>
       <div class="input-field">
         {{ form_widget(form.email, {'attr': {'class': 'validate'}}) }}
         {{ form_label(form.email, "Adresse mail") }}
-        {{ form_errors(form.email, {'attr': {'class': 'error'}}) }}
+        <font color="red">{{ form_errors(form.email) }}</font>
       </div>
       <div class="input-field">
         {{ form_widget(form.password.first, {'attr': {'class': 'validate'}}) }}
         {{ form_label(form.password.first, "Mot de passe") }}
-        {{ form_errors(form.password.first, {'attr': {'class': 'error'}}) }}
+        <font color="red">{{ form_errors(form.password.first) }}</font>
       </div>
       <div class="input-field">
         {{ form_widget(form.password.second, {'attr': {'class': 'validate'}}) }}
         {{ form_label(form.password.second, "Confirmer le mot de passe") }}
-        {{ form_errors(form.password.second, {'attr': {'class': 'error'}}) }}
+        <font color="red">{{ form_errors(form.password.second) }}</font>
       </div>
 
       <div class="g-recaptcha" data-sitekey="6LcpBDQUAAAAAA024vE3S04JHYQkwyuT0l2A2cUG"></div>

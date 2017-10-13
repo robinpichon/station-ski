@@ -1,5 +1,5 @@
 {% extends 'materialize/layout.html.twig' %}
-{% block title %}Liste des avis{% endblock %}
+{% block title %}{{ station.name }}{% endblock %}
 
 {% block content %}
   <div class="row">
@@ -10,10 +10,24 @@
           <img src="{{ asset('bundles/ski/img/station/' ~ station.image) }}">
         </div>
         <div class="card-content">
-          <div class="secondary-content" style="font-size: 1.3em;">
-            <b>{# moyenne #}</b>/5
-          </div>
+          {% if moyenne %}
+
+              {% if moyenne < 3 and moyenne > 2.5 %}
+                  {% set color = '#ff8900' %}
+              {% elseif moyenne < 2.5 %}
+                  {% set color = '#f44336' %}
+              {% else %}
+                  {% set color = '#26a69a' %}
+              {% endif %}
+
+              <div class="secondary-content" style="font-size: 1.3em; color: {{ color }};">
+                    <b>{{ moyenne|round(1, 'floor') }}</b>/5
+              </div>
+          {% endif %}
           <p>{{ station.description }}</p>
+          <div class="progress" style="background-color: #ee6e73;">
+                <div class="determinate" style="width: {{ ratio }}%; background-color: #26a69a;"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -33,7 +47,18 @@
             <img src="{{ asset('bundles/ski/img/avatars/' ~ review.user.avatar) }}" alt="" class="circle">
             <span class="title">{{ review.user.firstname }} {{ review.user.lastname|upper }}</span>
             <p>{{ review.comment }}</p>
-            <div class="secondary-content">{{ review.notation }}/5</div>
+
+            {% if review.notation < 3 and review.notation > 2.5 %}
+                {% set color = '#ff8900' %}
+            {% elseif review.notation < 2.5 %}
+                {% set color = '#f44336' %}
+            {% else %}
+                {% set color = '#26a69a' %}
+            {% endif %}
+
+            <div class="secondary-content" style="color: {{ color }};">
+                <b>{{ review.notation }}</b>/5
+            </div>
           </li>
         {% else %}
           <center>Aucun commentaire.</center>
@@ -48,7 +73,7 @@
                 <p>Vous postez un commentaire en tant que <b>{{ app.user.firstname }} {{ app.user.lastname }}</b>.</p>
                 {{ form_start(form) }}
                 <div class="input-field">
-                  {{ form_widget(form.notation, {'attr': {'class': 'validate'}}) }}
+                  {{ form_widget(form.notation, {'attr': {'class': 'validate', 'max': 5}}) }}
                   {{ form_label(form.notation, "Note") }}
                 </div>
                 <div class="input-field">

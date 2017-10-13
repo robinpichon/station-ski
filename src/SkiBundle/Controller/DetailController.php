@@ -23,7 +23,8 @@ class DetailController extends Controller
       $stationRepository = $this->getDoctrine()->getRepository(Station::class);
       $station = $stationRepository->findOneById($stationId);
       $reviews = $station->getReviews();
-      //$moyenne = $this->getAverageNotation($reviews);
+      $moyenne = $this->getAverageNotation($reviews);
+      $ratio = $this->getNotationRatio($reviews);
 
       $review = new Review();
       $form = $this->createFormBuilder()
@@ -60,7 +61,8 @@ class DetailController extends Controller
           return $this->render('SkiBundle:Main:detail.html.twig', array(
             'station' => $station,
             'reviews' => $reviews,
-            //'moyenne' => $moyenne,
+            'moyenne' => $moyenne,
+            'ratio' => $ratio['positive'],
             'form' =>  $form->createView()
           ));
       } else {
@@ -68,11 +70,26 @@ class DetailController extends Controller
       }
    }
 
-   /*public function getAverageNotation($reviews) {
-      $total = 0;
-      foreach ($reviews as $review) {
-          $total += $review->getNotation();
+   public function getAverageNotation($reviews) {
+      if(count($reviews) < 1) return false;
+       $moyenne = 0;
+       foreach($reviews as $review) {
+           $moyenne += $review->getNotation();
+       }
+       $moyenne /= count($reviews);
+       return $moyenne;
+   }
+
+   public function getNotationRatio($reviews) {
+      $ratio = ['positive' => 0, 'negative' => 0];
+      foreach($reviews as $review) {
+          if($review->getNotation() > 2.5) $ratio['positive']++;
+          else $ratio['negative']++;
       }
-      $total = $total/count($reviews);
-   }*/
+      $ratio = [
+        'positive' => ($ratio['positive']*100)/count($reviews),
+        'negative' => ($ratio['negative']*100)/count($reviews)
+      ];
+      return $ratio;
+   }
 }

@@ -49,6 +49,20 @@ class RegisterController extends Controller
                 $em->persist($user);
                 $em->flush();
 
+                $message = (new \Swift_Message('Bienvenue sur CriticSki !'))
+                        ->setFrom('postmaster@h3r0x.ovh')
+                        ->setTo($user->getEmail())
+                        ->setBody(
+                            $this->renderView(
+                                'Email/welcome.html.twig', [
+                                  'firstname' => $user->getFirstname(),
+                                  'lastname' => $user->getLastname()
+                                ]
+                            ),
+                            'text/html'
+                        );
+
+                $this->get('mailer')->send($message);
                 $this->get('session')->getFlashBag()->add('success', 'Votre compte a été créé, vous pouvez désormais vous connecter.');
                 return $this->redirectToRoute('login');
             } else {

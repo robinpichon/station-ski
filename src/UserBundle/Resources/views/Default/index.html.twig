@@ -5,12 +5,39 @@
   <div class="row">
       <h4>Mon compte</h4>
       <p>Bienvenue sur votre espace personnel.</p>
-      <div class="card">
-        <div class="card-content">
-          <p>ID: <b>{{ app.user.id }}</b></p>
-          <p>Nom complet: <b>{{ app.user.firstname }} {{ app.user.lastname }}</b></p>
-          <p>Adresse mail: <b>{{ app.user.email }}</b></p>
-        </div>
+      <div class="col s6">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Mes informations</span>
+              <p>ID: <b>{{ app.user.id }}</b></p>
+              <p>Nom complet: <b>{{ app.user.firstname }} {{ app.user.lastname }}</b></p>
+              <p>Adresse mail: <b>{{ app.user.email }}</b></p>
+              <a class="waves-effect waves-light btn" style="margin-top: 10px;"><i class="material-icons left">edit</i>Modifier</a>
+            </div>
+          </div>
+      </div>
+      <div class="col s6">
+          <div class="card">
+            <div class="card-content">
+                <span class="card-title">Mon avatar</span>
+                <!--<div class="col s4">-->
+                    <img src="{{ asset('bundles/ski/img/avatars/' ~ app.user.avatar) }}" width="150px" height="150px" class="circle">
+                <!--</div>
+                <div class="col s8">-->
+                    <form action="#">
+                      <div class="file-field input-field">
+                        <div class="btn">
+                          <span>Parcourir</span>
+                          <input type="file" multiple>
+                        </div>
+                        <div class="file-path-wrapper">
+                          <input class="file-path validate" type="text" placeholder="Sélectionnez un fichier">
+                        </div>
+                      </div>
+                    </form>
+                <!--</div>-->
+            </div>
+          </div>
       </div>
   </div>
 {% endblock %}
