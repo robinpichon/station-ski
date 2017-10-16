@@ -10,6 +10,7 @@
           <img src="{{ asset('bundles/ski/img/station/' ~ station.image) }}">
         </div>
         <div class="card-content">
+          <i class="material-icons left">location_on</i><b>{{ station.location }}</b>
           {% if moyenne %}
 
               {% if moyenne < 3 and moyenne > 2.5 %}
@@ -23,12 +24,16 @@
               <div class="secondary-content" style="font-size: 1.3em; color: {{ color }};">
                     <b>{{ moyenne|round(1, 'floor') }}</b>/5
               </div>
+
+              <div class="progress" style="background-color: #ee6e73;">
+                    <div class="determinate" style="width: {{ ratio }}%; background-color: #26a69a;"></div>
+              </div>
           {% endif %}
           <p>{{ station.description }}</p>
-          <div class="progress" style="background-color: #ee6e73;">
-                <div class="determinate" style="width: {{ ratio }}%; background-color: #26a69a;"></div>
-          </div>
         </div>
+      </div>
+      <div class="map-responsive">
+          {{ map|raw }}
       </div>
     </div>
     <div class="col s6">

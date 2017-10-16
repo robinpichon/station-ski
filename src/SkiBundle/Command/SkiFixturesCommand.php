@@ -18,7 +18,6 @@ class SkiFixturesCommand extends ContainerAwareCommand
         $this
             ->setName('ski:fixtures')
             ->setDescription('Chargement du jeu d\'essai.')
-            //->addArgument('nbGenerate', InputArgument::REQUIRED, 'Nombre d\'entrées à générer.')
         ;
     }
 
@@ -26,6 +25,8 @@ class SkiFixturesCommand extends ContainerAwareCommand
     {
         $output->writeln('Génération de 3 stations, 5 users et 10 reviews...');
         $stations = ['Aussois', 'Avoriaz', 'Les 2 alpes'];
+        $locations = ['Savoie (73)', 'Haute Savoie (74)', 'Isère (38)'];
+        $places_id = ['ChIJu26ygcESikcRCXyyB2KEqTM', 'ChIJeaU1B1KmjkcRALIogy2rCAo', 'ChIJu26ygcESikcRCXyyB2KEqTM'];
         $comments = ['Super !', 'Très satisfait.', 'Nul.', 'Fuyez !', 'Bof bof'];
 
         $passwordEncoder = $this->getContainer()->get('security.password_encoder');
@@ -35,11 +36,15 @@ class SkiFixturesCommand extends ContainerAwareCommand
         foreach($stations as $key => $value) {
             $station = new Station();
             $station->setName($value)
+                    ->setLocation($locations[$key])
+                    ->setPlaceId($places_id[$key])
                     ->setDescription('Description de la station')
                     ->setImage(str_replace(' ', '', strtolower($value).'.jpg'));
 
             $em->persist($station);
         }
+
+        $em->flush();
 
         // Génération des users
         for($i = 0; $i <= 5; $i++) {
@@ -57,7 +62,7 @@ class SkiFixturesCommand extends ContainerAwareCommand
         // Génération des reviews
         for($i = 0; $i <= 10; $i++) {
             $review = new Review();
-            $review->setStation($station)
+            $review->setStation($em->getRepository(Station::class)->findOneById(rand(1, count($stations))))
                     ->setUser($user)
                     ->setNotation(rand(1, 5))
                     ->setComment($comments[rand(1, count($comments))-1]);

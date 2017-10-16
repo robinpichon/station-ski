@@ -7,6 +7,7 @@ use SkiBundle\Repository\StationRepository;
 use SkiBundle\Repository\ReviewRepository;
 use SkiBundle\Entity\Station;
 use SkiBundle\Entity\Review;
+use SkiBundle\Resources\Map\MapService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -58,11 +59,13 @@ class DetailController extends Controller
       }
 
       if($station !== null) {
+          $map = $this->container->get('station.map.generate');
           return $this->render('SkiBundle:Main:detail.html.twig', array(
             'station' => $station,
             'reviews' => $reviews,
             'moyenne' => $moyenne,
             'ratio' => $ratio['positive'],
+            'map' => $map->getMap($station->getId()),
             'form' =>  $form->createView()
           ));
       } else {
@@ -81,6 +84,7 @@ class DetailController extends Controller
    }
 
    public function getNotationRatio($reviews) {
+     if(count($reviews) < 1) return false;
       $ratio = ['positive' => 0, 'negative' => 0];
       foreach($reviews as $review) {
           if($review->getNotation() > 2.5) $ratio['positive']++;
