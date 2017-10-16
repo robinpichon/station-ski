@@ -59,8 +59,7 @@ class RegisterController extends Controller
                                   'lastname' => $user->getLastname()
                                 ]
                             ),
-                            'text/html'
-                        );
+                            'text/html');
 
                 $this->get('mailer')->send($message);
                 $this->get('session')->getFlashBag()->add('success', 'Votre compte a été créé, vous pouvez désormais vous connecter.');
