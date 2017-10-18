@@ -63,8 +63,15 @@
                 {% set color = '#26a69a' %}
             {% endif %}
 
-            <div class="secondary-content" style="color: {{ color }};">
-                <b>{{ review.notation }}</b>/5
+            <div class="secondary-content" style="margin-top: -6px; color: {{ color }};">
+                {% for i in 0..4 %}
+                    {% if i < review.notation %}
+                        <i class="material-icons left" style="font-size: 1.5rem; margin-right: 0;">star</i>
+                    {% else %}
+                        <i class="material-icons left" style="font-size: 1.5rem; margin-right: 0;">star_border</i>
+                    {% endif %}
+                {% endfor %}
+                <b style="margin-left: 5px;">{{ review.notation }}</b>/5
             </div>
           </li>
         {% else %}
