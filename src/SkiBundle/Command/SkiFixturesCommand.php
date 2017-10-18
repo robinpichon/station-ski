@@ -25,6 +25,11 @@ class SkiFixturesCommand extends ContainerAwareCommand
     {
         $output->writeln('Generating 3 stations, 5 users and 10 reviews...');
         $stations = ['Aussois', 'Avoriaz', 'Les 2 alpes'];
+        $station_desc = [
+          'Située dans le département de Savoie, en Haute Maurienne Vanoise, sur un plateau orienté plein sud à 1500 m d’altitude, la station de ski d’Aussois séduit les familles en vacances à la neige. Son cadre reposant et traditionnel ainsi que les infrastructures et services réservés aux familles (station labélisée Famille Plus depuis 2006) sont ses véritables atouts.',
+          'La station de ski d\'Avoriaz est située au cœur du domaine des Portes du Soleil, sur un plateau exposé plein sud. Née d\'un défi écologique avant l\'âge, Avoriaz est une station entièrement piétonne, interdite aux voitures, où tous les hébergements sont accessibles à ski et où les rues sont des pistes de ski.',
+          'Station de ski phare du département de l\'Isère (avec sa consœur de l\'Alpe d\'Huez), les 2 Alpes jouie d\'une réputation internationale grâce notamment à son domaine d\'altitude (le plus grand domaine de ski sur glacier d\'Europe) permettent de pratiquer le ski jusqu’à 3600 mètres d’altitude. Le glacier est en effet un atout sérieux, l\'assurance de skier sur une neige naturelle chaque année, hiver comme été...'
+        ];
         $locations = ['Savoie (73)', 'Haute Savoie (74)', 'Isère (38)'];
         $places_id = ['ChIJu26ygcESikcRCXyyB2KEqTM', 'ChIJeaU1B1KmjkcRALIogy2rCAo', 'ChIJu26ygcESikcRCXyyB2KEqTM'];
         $comments = ['Super !', 'Très satisfait.', 'Nul.', 'Fuyez !', 'Bof bof'];
@@ -38,7 +43,7 @@ class SkiFixturesCommand extends ContainerAwareCommand
             $station->setName($value)
                     ->setLocation($locations[$key])
                     ->setPlaceId($places_id[$key])
-                    ->setDescription('Description de la station')
+                    ->setDescription($station_desc[$key])
                     ->setImage(str_replace(' ', '', strtolower($value).'.jpg'));
 
             $em->persist($station);

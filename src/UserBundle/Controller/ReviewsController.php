@@ -4,6 +4,8 @@ namespace UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use SkiBundle\Repository\ReviewRepository;
+use SkiBundle\Entity\Review;
 
 class ReviewsController extends Controller
 {
@@ -12,6 +14,33 @@ class ReviewsController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('UserBundle:Default:reviews.html.twig');
+        $reviewsRepository = $this->getDoctrine()->getRepository(Review::class);
+        $reviews = $reviewsRepository->findByUser($this->getUser());
+
+        return $this->render('UserBundle:Default:reviews.html.twig', [
+            'reviews' => $reviews
+        ]);
+    }
+
+    /**
+     * @Route("/account/reviews/delete/{id}", name="account_reviews_delete")
+     */
+    public function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $review = $em->getRepository(Review::class)->findOneById($id);
+
+        if($review && $review->getUser()->getId() === $this->getUser()->getId())
+        {
+            $em->remove($review);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Commentaire supprimé avec succès.');
+        }
+        else
+        {
+            $this->get('session')->getFlashBag()->add('error', 'Erreur lors de la suppression du commentaire.');
+        }
+
+        return $this->redirectToRoute('account_reviews');
     }
 }

@@ -2,5 +2,35 @@
 {% block title %}Accueil{% endblock %}
 
 {% block content %}
-  <h3>Bienvenue !</h3>
+    <div class="carousel carousel-slider center" data-indicators="true">
+      <div class="carousel-fixed-item center">
+        <h4 class="white-text" style="text-shadow: 2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, -2px 0 0 black, 2px 2px 0 black, 2px -2px 0 black, -2px 2px 0 black, -2px -2px 0 black;">
+            Trouvez la station idéale
+        </h4>
+        <a href="{{ path('list_action') }}" class="btn waves-effect white black-text">Liste des stations</a>
+      </div>
+      <div class="carousel-item" href="#">
+          <img src="{{ asset('bundles/ski/img/slides/1.jpg') }}" width="1360px" height="570px">
+      </div>
+      <div class="carousel-item" href="#">
+          <img src="{{ asset('bundles/ski/img/slides/2.jpg') }}" width="1360px" height="570px">
+      </div>
+      <div class="carousel-item" href="#">
+          <img src="{{ asset('bundles/ski/img/slides/3.jpg') }}" width="1360px" height="570px">
+      </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.carousel.carousel-slider').carousel({
+                fullWidth: true
+            });
+
+            autoplay();
+            function autoplay() {
+                $('.carousel.carousel-slider').carousel('next');
+                setTimeout(autoplay, 4500);
+            }
+        });
+    </script>
 {% endblock %}

@@ -78,7 +78,7 @@
                 <p>Vous postez un commentaire en tant que <b>{{ app.user.firstname }} {{ app.user.lastname }}</b>.</p>
                 {{ form_start(form) }}
                 <div class="input-field">
-                  {{ form_widget(form.notation, {'attr': {'class': 'validate', 'max': 5}}) }}
+                  {{ form_widget(form.notation, {'attr': {'class': 'validate', 'min': 1, 'max': 5}}) }}
                   {{ form_label(form.notation, "Note") }}
                 </div>
                 <div class="input-field">

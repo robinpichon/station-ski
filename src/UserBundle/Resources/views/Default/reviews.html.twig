@@ -5,11 +5,37 @@
   <div class="row">
       <h4>Mes avis</h4>
       <p>Retrouvez tous les avis que vous avez postés.</p>
-      <div class="col l12">
-          <div class="card">
-            <div class="card-content">
-                Aucun avis trouvé.
-            </div>
+      <div class="card">
+          <div class="card-content">
+              {% if reviews %}
+                  <table class="striped">
+                      <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Station</th>
+                            <th>Note</th>
+                            <th>Commentaire</th>
+                            <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for review in reviews %}
+                          <tr>
+                            <td>{{ review.id }}</td>
+                            <td><a href="{{ path('detail_action', {'stationId': review.station.id}) }}" target="_blank">{{ review.station.name }}</a></td>
+                            <td><b>{{ review.notation }}</b>/5</td>
+                            <td>{{ review.comment }}</td>
+                            <td>
+                                <a class="btn-floating"><i class="tiny material-icons">edit</i></a>
+                                <a href="{{ path('account_reviews_delete', {'id': review.id}) }}" class="btn-floating red"><i class="tiny material-icons">delete</i></a>
+                            </td>
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+                  </table>
+              {% else %}
+                  <center style="color: red;">Vous n'avez posté aucun avis.</center>
+              {% endif %}
           </div>
       </div>
   </div>
