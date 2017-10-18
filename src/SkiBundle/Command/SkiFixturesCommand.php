@@ -17,13 +17,13 @@ class SkiFixturesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('ski:fixtures')
-            ->setDescription('Chargement du jeu d\'essai.')
+            ->setDescription('Load fixtures.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Génération de 3 stations, 5 users et 10 reviews...');
+        $output->writeln('Generating 3 stations, 5 users and 10 reviews...');
         $stations = ['Aussois', 'Avoriaz', 'Les 2 alpes'];
         $locations = ['Savoie (73)', 'Haute Savoie (74)', 'Isère (38)'];
         $places_id = ['ChIJu26ygcESikcRCXyyB2KEqTM', 'ChIJeaU1B1KmjkcRALIogy2rCAo', 'ChIJu26ygcESikcRCXyyB2KEqTM'];
@@ -32,7 +32,7 @@ class SkiFixturesCommand extends ContainerAwareCommand
         $passwordEncoder = $this->getContainer()->get('security.password_encoder');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        // Génération des stations
+        // Generate stations
         foreach($stations as $key => $value) {
             $station = new Station();
             $station->setName($value)
@@ -46,7 +46,7 @@ class SkiFixturesCommand extends ContainerAwareCommand
 
         $em->flush();
 
-        // Génération des users
+        // Generate users
         for($i = 0; $i <= 5; $i++) {
             $user = new User();
             $user->setFirstname('Test')
@@ -59,7 +59,7 @@ class SkiFixturesCommand extends ContainerAwareCommand
             $em->persist($user);
         }
 
-        // Génération des reviews
+        // Generate reviews
         for($i = 0; $i <= 10; $i++) {
             $review = new Review();
             $review->setStation($em->getRepository(Station::class)->findOneById(rand(1, count($stations))))
@@ -71,7 +71,20 @@ class SkiFixturesCommand extends ContainerAwareCommand
         }
 
         $em->flush();
-        $output->writeln('<info>Génération OK.</info>');
+        $output->writeln('<info>Generation OK.</info>');
+
+        // Clear avatars directory
+        $output->writeln('Clearing avatars directory...');
+        $avatars_dir = $this->getContainer()->getParameter('avatars_directory');
+        $c_del = 0;
+        foreach(scandir($avatars_dir) as $key => $file) {
+            if($file !== 'default.png' && $key > 1) {
+                unlink($avatars_dir.'/'.$file);
+                $c_del++;
+            }
+        }
+
+        $output->writeln('<info>Cleared '.$c_del.' files.</info>');
     }
 
 }

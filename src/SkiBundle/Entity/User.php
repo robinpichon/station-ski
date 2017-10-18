@@ -3,6 +3,7 @@
 namespace SkiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -11,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="SkiBundle\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -51,11 +52,20 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="avatar", type="string", length=255)
+     *
      */
     private $avatar;
+
+    /**
+    * @Assert\File(
+    *     maxSize = "5M",
+    *     mimeTypes = {"image/jpeg", "image/png", "image/gif"},
+    *     maxSizeMessage = "La taille maximum acceptée est de 5MB.",
+    *     mimeTypesMessage = "Vous devez envoyer un fichier image (JPEG, PNG ou GIF)."
+    * )
+    */
+    private $avatarFile;
 
     /**
      * @var array
@@ -180,13 +190,6 @@ class User implements UserInterface
         return $this->password;
     }
 
-    /**
-     * Set avatar
-     *
-     * @param string $avatar
-     *
-     * @return User
-     */
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
@@ -194,14 +197,21 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * Get avatar
-     *
-     * @return string
-     */
     public function getAvatar()
     {
         return $this->avatar;
+    }
+
+    public function setAvatarFile($avatarFile)
+    {
+        $this->avatarFile = $avatarFile;
+
+        return $this;
+    }
+
+    public function getAvatarFile()
+    {
+        return $this->avatarFile;
     }
 
     /**
@@ -246,5 +256,23 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         return null;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email
+        ) = unserialize($serialized);
     }
 }

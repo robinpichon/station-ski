@@ -27,7 +27,6 @@ class DetailController extends Controller
       $moyenne = $this->getAverageNotation($reviews);
       $ratio = $this->getNotationRatio($reviews);
 
-      $review = new Review();
       $form = $this->createFormBuilder()
           ->add('notation', IntegerType::class)
           ->add('comment', TextareaType::class)
@@ -38,6 +37,7 @@ class DetailController extends Controller
       if($form->isSubmitted() && $form->isValid()) {
           $data = $form->getData();
 
+          $review = new Review();
           $em = $this->getDoctrine()->getManager();
           $review->setUser($this->getUser())
                   ->setStation($station)

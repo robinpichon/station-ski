@@ -1,7 +1,7 @@
 <html>
   <head>
     {% block head_metas %}
-           <meta charset="utf-8">
+        <meta charset="utf-8">
     {% endblock %}
     <title>{% block title '' %} - CriticSki</title>
     <!--Import Google Icon Font-->
@@ -16,7 +16,7 @@
   <body>
     <nav class="light-blue lighten-1" role="navigation">
       <div class="nav-wrapper container">
-        <a id="logo-container" href="{{ path('index_action') }}" class="brand-logo">CriticSki</a>
+        <a id="logo-container" href="{{ path('index_action') }}" class="brand-logo"><i class="material-icons left">star</i>CriticSki</a>
 
         <ul class="right hide-on-med-and-down">
           <li><a href="{{ path('list_action') }}"><i class="material-icons left">view_list</i> Liste des stations</a></li>
@@ -24,7 +24,7 @@
           {% if is_granted('IS_AUTHENTICATED_FULLY') %}
               <ul id="dropdown1" class="dropdown-content">
                 <li><a href="{{ path('account') }}">Mon compte</a></li>
-                <li><a href="#!">Mes avis</a></li>
+                <li><a href="{{ path('account_reviews') }}">Mes avis</a></li>
                 <li class="divider"></li>
                 <li><a href="{{ path('logout') }}"><i class="material-icons left">power_settings_new</i>Déconnexion</a></li>
               </ul>
@@ -68,14 +68,14 @@
     </main>
 
     {% for flashMessage in app.session.flashbag.get('success') %}
-        <script>
-            window.onload = function () {
-                Materialize.toast('{{ flashMessage }}', 4000, 'green')
-            };
-        </script>
+        <script> window.onload = function () { Materialize.toast('{{ flashMessage }}', 4000, 'green') }; </script>
     {% endfor %}
 
-    <footer class="page-footer orange">
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <script> window.onload = function () { Materialize.toast('{{ flashMessage }}', 4000, 'red') }; </script>
+    {% endfor %}
+
+    <footer class="page-footer light-blue lighten-1">
       <div class="container">
         <div class="row">
           <div class="col l6 s12">
@@ -92,7 +92,7 @@
             <h5 class="white-text">Mon compte</h5>
             <ul>
               <li><a class="white-text" href="{{ path('account') }}">Mon compte</a></li>
-              <li><a class="white-text" href="#!">Mes avis</a></li>
+              <li><a class="white-text" href="{{ path('account_reviews') }}">Mes avis</a></li>
             </ul>
           </div>
         </div>
