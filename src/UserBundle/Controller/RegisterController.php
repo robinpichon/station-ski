@@ -50,7 +50,7 @@ class RegisterController extends Controller
                 $em->flush();
 
                 $message = (new \Swift_Message('Bienvenue sur CriticSki !'))
-                        ->setFrom('postmaster@h3r0x.ovh')
+                        ->setFrom(['postmaster@h3r0x.ovh' => 'CriticSki'])
                         ->setTo($user->getEmail())
                         ->setBody(
                             $this->renderView(

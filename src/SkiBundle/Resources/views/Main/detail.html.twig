@@ -5,6 +5,7 @@
   <div class="row">
     <div class="col s12"><h3>{{ station.name }}</h3></div>
     <div class="col s6">
+      <h5>La station</h5>
       <div class="card">
         <div class="card-image">
           <img src="{{ asset('bundles/ski/img/station/' ~ station.image) }}">
@@ -37,11 +38,12 @@
       </div>
     </div>
     <div class="col s6">
+      <h5>Avis ({{ reviews|length }})</h5>
 
       {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-          <a class="waves-effect waves-light btn-large modal-trigger" href="#newComment" style="width: 100%; margin-top: 8px;">
+          <a class="waves-effect waves-light btn-large modal-trigger" href="#newComment" style="width: 100%;">
       {% else %}
-          <a class="btn-large tooltipped" data-position="top" data-delay="50" data-tooltip="Vous devez être connecté pour écrire un commentaire." style="width: 100%; margin-top: 8px; background-color: lightgrey;">
+          <a class="btn-large tooltipped" data-position="top" data-delay="50" data-tooltip="Vous devez être connecté pour écrire un commentaire." style="width: 100%; background-color: lightgrey;">
       {% endif %}
           <i class="material-icons left">edit</i>écrire un commentaire
       </a>
@@ -77,10 +79,10 @@
                 <h4>Commentaire</h4>
                 <p>Vous postez un commentaire en tant que <b>{{ app.user.firstname }} {{ app.user.lastname }}</b>.</p>
                 {{ form_start(form) }}
-                <div class="input-field">
-                  {{ form_widget(form.notation, {'attr': {'class': 'validate', 'min': 1, 'max': 5}}) }}
+                <p class="range-field">
                   {{ form_label(form.notation, "Note") }}
-                </div>
+                  {{ form_widget(form.notation, {'attr': {'value': 0, 'min': 0, 'max': 5}}) }}
+                </p>
                 <div class="input-field">
                   {{ form_widget(form.comment, {'attr': {'class': 'materialize-textarea'}}) }}
                   {{ form_label(form.comment, "Commentaire") }}

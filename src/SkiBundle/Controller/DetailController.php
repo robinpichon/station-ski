@@ -9,7 +9,7 @@ use SkiBundle\Entity\Station;
 use SkiBundle\Entity\Review;
 use SkiBundle\Resources\Map\MapService;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -28,7 +28,7 @@ class DetailController extends Controller
       $ratio = $this->getNotationRatio($reviews);
 
       $form = $this->createFormBuilder()
-          ->add('notation', IntegerType::class)
+          ->add('notation', RangeType::class)
           ->add('comment', TextareaType::class)
           ->add('save', SubmitType::class)
           ->getForm();
@@ -49,13 +49,6 @@ class DetailController extends Controller
 
           $this->get('session')->getFlashBag()->add('success', 'Commentaire enregistré avec succès.');
           return $this->redirect($request->getUri());
-      }
-
-      $sort = $request->query->get('sort');
-      if(!empty($sort) && $sort === 'rating') {
-          usort($reviews, function($a, $b) {
-            return $a->getNotation() <=> $b->getNotation();
-          });
       }
 
       if($station !== null) {
