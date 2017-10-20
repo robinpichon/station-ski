@@ -12,7 +12,7 @@
               <p>ID: <b>{{ app.user.id }}</b></p>
               <p>Nom complet: <b>{{ app.user.firstname }} {{ app.user.lastname }}</b></p>
               <p>Adresse mail: <b>{{ app.user.email }}</b></p>
-              <a class="waves-effect waves-light btn" style="margin-top: 10px;"><i class="material-icons left">edit</i>Modifier</a>
+              <a class="waves-effect waves-light btn modal-trigger" href="#editAccount" style="margin-top: 10px;"><i class="material-icons left">edit</i>Modifier</a>
             </div>
           </div>
       </div>
@@ -51,9 +51,42 @@
                           }
                       });
                   </script>
-                  
+
               </div>
           </div>
       </div>
+
+      <div id="editAccount" class="modal">
+          <div class="modal-content">
+              <h4>Modifier mes informations</h4>
+
+              {{ form_start(form_account) }}
+              <div class="input-field">
+                {{ form_widget(form_account.firstname, {'attr': {'class': 'validate', 'value': app.user.firstname}}) }}
+                {{ form_label(form_account.firstname, "Prénom") }}
+              </div>
+              <div class="input-field">
+                {{ form_widget(form_account.lastname, {'attr': {'class': 'validate', 'value': app.user.lastname}}) }}
+                {{ form_label(form_account.lastname, "Nom") }}
+              </div>
+              <div class="input-field">
+                {{ form_widget(form_account.email, {'attr': {'class': 'validate', 'value': app.user.email}}) }}
+                {{ form_label(form_account.email, "Adresse mail") }}
+              </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Fermer</a>
+            {{ form_widget(form_account.save, {'label': 'Valider', 'attr': {'class': 'modal-action waves-effect waves-green btn'}}) }}
+            {{ form_rest(form_account) }}
+            {{ form_end(form_account) }}
+          </div>
+      </div>
   </div>
+
+  <script>
+    // intialize js components
+    $(document).ready(function(){
+        $('.modal').modal();
+    });
+  </script>
 {% endblock %}

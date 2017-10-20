@@ -1,0 +1,14 @@
+<h3>CriticSki</h3>
+Bonjour <b>{{ user.firstname }} {{ user.lastname|upper }}</b>,
+<br><br>
+Vous recevez ce mail car vous avez récemment envoyé un avis sur la station <b>{{ station.name }}</b>.<br>
+Néanmoins, votre avis a été refusé par notre équipe de modération car il ne respectait pas les règles de la communauté.<br>
+Nous vous invitons à vérifier le contenu de votre avis et de le poster à nouveau en prenant en compte ces règles.
+<br><br>
+-----------------------------------------------------------<br>
+Note: <b>{{ review.notation }}/5</b><br>
+Commentaire: <b>{{ review.comment }}</b><br>
+-----------------------------------------------------------
+<br><br>
+A très bientôt !<br>
+L'équipe CriticSki.

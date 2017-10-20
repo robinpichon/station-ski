@@ -1,10 +1,10 @@
 {% extends 'materialize/layout.html.twig' %}
-{% block title %}Commentaires{% endblock %}
+{% block title %}Avis{% endblock %}
 
 {% block content %}
   <div class="row">
-      <h4>Commentaires</h4>
-      <p>Bienvenue sur l'espace de modération des commentaires.</p>
+      <h4>Avis</h4>
+      <p>Bienvenue sur l'espace de modération des avis.</p>
       <div class="card">
           <div class="card-content">
               {% if reviews %}
@@ -28,15 +28,15 @@
                             <td><b>{{ review.notation }}</b>/5</td>
                             <td>{{ review.comment }}</td>
                             <td>
-                                <a class="btn-floating green"><i class="tiny material-icons">check</i></a>
-                                <a href="{{ path('account_reviews_delete', {'id': review.id}) }}" class="btn-floating red"><i class="tiny material-icons">clear</i></a>
+                                <a href="{{ path('admin_reviews_accept', {'id': review.id}) }}" class="btn-floating green"><i class="tiny material-icons">check</i></a>
+                                <a href="{{ path('admin_reviews_deny', {'id': review.id}) }}" class="btn-floating red"><i class="tiny material-icons">clear</i></a>
                             </td>
                           </tr>
                       {% endfor %}
                       </tbody>
                   </table>
               {% else %}
-                  <center style="color: red;">Aucun commentaire à valider pour le moment.</center>
+                  <center style="color: red;">Aucun avis à modérer.</center>
               {% endif %}
           </div>
       </div>

@@ -1,0 +1,13 @@
+<h3>CriticSki</h3>
+Bonjour <b>{{ user.firstname }} {{ user.lastname|upper }}</b>,
+<br><br>
+Vous recevez ce mail car vous avez récemment envoyé un avis sur la station <b>{{ station.name }}</b>.<br>
+Cet avis a été accepté par notre équipe de modération et est désormais visible sur <a href="{{ url('detail_action', {'stationId': station.id}) }}">la fiche de la station</a>.
+<br><br>
+-----------------------------------------------------------<br>
+Note: <b>{{ review.notation }}/5</b><br>
+Commentaire: <b>{{ review.comment }}</b><br>
+-----------------------------------------------------------
+<br><br>
+Merci pour votre contribution !<br>
+L'équipe CriticSki.
