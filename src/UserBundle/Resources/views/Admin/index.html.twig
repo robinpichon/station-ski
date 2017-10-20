@@ -5,5 +5,27 @@
   <div class="row">
       <h4>Administration</h4>
       <p>Bienvenue sur votre espace d'administration.</p>
+      <div class="col l4">
+        <div class="card white">
+          <div class="card-content black-text">
+            <span class="card-title">Membres</span>
+            <p>Gérer les membres.</p>
+          </div>
+          <div class="card-action">
+            <a href="{{ path('admin_users') }}">Accéder</a>
+          </div>
+        </div>
+      </div>
+      <div class="col l4">
+        <div class="card white">
+          <div class="card-content black-text">
+            <span class="card-title">Avis</span>
+            <p>Modérer les avis postés par les membres.</p>
+          </div>
+          <div class="card-action">
+            <a href="{{ path('admin_reviews') }}">Accéder</a>
+          </div>
+        </div>
+      </div>
   </div>
 {% endblock %}
