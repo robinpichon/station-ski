@@ -43,11 +43,11 @@ class DefaultController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'Avatar mis à jour.');
+            $this->get('session')->getFlashBag()->add('green', 'Avatar mis à jour.');
         }
         else if($form->isSubmitted() && !$form->isValid())
         {
-            $this->get('session')->getFlashBag()->add('error', 'Format JPEG, PNG ou GIF uniquement.');
+            $this->get('session')->getFlashBag()->add('red', 'Format JPEG, PNG ou GIF uniquement.');
         }
 
         return $this->render('UserBundle:Default:index.html.twig', [

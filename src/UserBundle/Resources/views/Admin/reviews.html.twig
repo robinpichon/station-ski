@@ -1,10 +1,10 @@
 {% extends 'materialize/layout.html.twig' %}
-{% block title %}Mes avis{% endblock %}
+{% block title %}Commentaires{% endblock %}
 
 {% block content %}
   <div class="row">
-      <h4>Mes avis</h4>
-      <p>Retrouvez tous les avis que vous avez postés.</p>
+      <h4>Commentaires</h4>
+      <p>Bienvenue sur l'espace de modération des commentaires.</p>
       <div class="card">
           <div class="card-content">
               {% if reviews %}
@@ -12,6 +12,7 @@
                       <thead>
                         <tr>
                             <th>#</th>
+                            <th>Membre</th>
                             <th>Station</th>
                             <th>Note</th>
                             <th>Commentaire</th>
@@ -22,26 +23,20 @@
                       {% for review in reviews %}
                           <tr>
                             <td>{{ review.id }}</td>
+                            <td>{{ review.user.firstname }} {{ review.user.lastname }} ({{ review.user.id }})</td>
                             <td><a href="{{ path('detail_action', {'stationId': review.station.id}) }}" target="_blank">{{ review.station.name }}</a></td>
                             <td><b>{{ review.notation }}</b>/5</td>
+                            <td>{{ review.comment }}</td>
                             <td>
-                                {{ review.comment }}
-                                {% if review.status %}
-                                    <span class="new badge green" data-badge-caption="Validé"></span>
-                                {% else %}
-                                    <span class="new badge orange" data-badge-caption="En attente"></span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a class="btn-floating"><i class="tiny material-icons">edit</i></a>
-                                <a href="{{ path('account_reviews_delete', {'id': review.id}) }}" class="btn-floating red"><i class="tiny material-icons">delete</i></a>
+                                <a class="btn-floating green"><i class="tiny material-icons">check</i></a>
+                                <a href="{{ path('account_reviews_delete', {'id': review.id}) }}" class="btn-floating red"><i class="tiny material-icons">clear</i></a>
                             </td>
                           </tr>
                       {% endfor %}
                       </tbody>
                   </table>
               {% else %}
-                  <center style="color: red;">Vous n'avez posté aucun avis.</center>
+                  <center style="color: red;">Aucun commentaire à valider pour le moment.</center>
               {% endif %}
           </div>
       </div>

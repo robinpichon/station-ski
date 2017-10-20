@@ -16,7 +16,9 @@
   <body>
     <nav class="light-blue lighten-1" role="navigation">
       <div class="nav-wrapper container">
-        <a id="logo-container" href="{{ path('index_action') }}" class="brand-logo"><i class="material-icons left">star</i>CriticSki</a>
+        <a id="logo-container" href="{{ path('index_action') }}" class="brand-logo" style="margin-left: -5px;">
+            <i class="material-icons left" style="margin-right: 5px;">star</i>CriticSki
+        </a>
 
         <ul class="right hide-on-med-and-down">
           <li><a href="{{ path('list_action') }}"><i class="material-icons left">view_list</i> Liste des stations</a></li>
@@ -67,12 +69,14 @@
       </div>
     </main>
 
-    {% for flashMessage in app.session.flashbag.get('success') %}
-        <script> window.onload = function () { Materialize.toast('{{ flashMessage }}', 4000, 'green') }; </script>
-    {% endfor %}
-
-    {% for flashMessage in app.session.flashbag.get('error') %}
-        <script> window.onload = function () { Materialize.toast('{{ flashMessage }}', 4000, 'red') }; </script>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <script>
+                window.onload = function () {
+                    Materialize.toast("{{ message|raw }}", 4000, "{{ label }}")
+                };
+            </script>
+        {% endfor %}
     {% endfor %}
 
     <footer class="page-footer light-blue lighten-1">

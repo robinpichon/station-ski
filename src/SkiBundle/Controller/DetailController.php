@@ -23,9 +23,18 @@ class DetailController extends Controller
       $request = Request::createFromGlobals();
       $stationRepository = $this->getDoctrine()->getRepository(Station::class);
       $station = $stationRepository->findOneById($stationId);
-      $reviews = $station->getReviews();
-      $moyenne = $this->getAverageNotation($reviews);
-      $ratio = $this->getNotationRatio($reviews);
+
+      if($station !== null) {
+          $reviews = [];
+          foreach($station->getReviews() as $review) {
+              if($review->getStatus()) {
+                  array_push($reviews, $review);
+              }
+          }
+
+          $moyenne = $this->getAverageNotation($reviews);
+          $ratio = $this->getNotationRatio($reviews);
+      }
 
       $form = $this->createFormBuilder()
           ->add('notation', RangeType::class)
@@ -41,28 +50,29 @@ class DetailController extends Controller
           $em = $this->getDoctrine()->getManager();
           $review->setUser($this->getUser())
                   ->setStation($station)
+                  ->setStatus(false)
                   ->setNotation($data['notation'])
                   ->setComment($data['comment']);
 
           $em->persist($review);
           $em->flush();
 
-          $this->get('session')->getFlashBag()->add('success', 'Commentaire enregistré avec succès.');
+          $this->get('session')->getFlashBag()->add('green', 'Commentaire envoyé avec succès.<br>Vous recevrez un mail lorsqu\'il sera validé.');
           return $this->redirect($request->getUri());
       }
 
       if($station !== null) {
           $map = $this->container->get('station.map.generate');
-          return $this->render('SkiBundle:Main:detail.html.twig', array(
+          return $this->render('SkiBundle:Main:detail.html.twig', [
             'station' => $station,
             'reviews' => $reviews,
             'moyenne' => $moyenne,
             'ratio' => $ratio['positive'],
-            'map' => $map->getMap($station->getId()),
+            'mapurl' => $map->getMapUrl($station->getId()),
             'form' =>  $form->createView()
-          ));
+          ]);
       } else {
-          return $this->render('SkiBundle:Error:404.html.twig');
+          return $this->render('SkiBundle:Exception:error404.html.twig');
       }
    }
 

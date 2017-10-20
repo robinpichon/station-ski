@@ -23,7 +23,6 @@ class SkiFixturesCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Generating 3 stations, 5 users and 10 reviews...');
         $stations = ['Aussois', 'Avoriaz', 'Les 2 alpes'];
         $station_desc = [
           'Située dans le département de Savoie, en Haute Maurienne Vanoise, sur un plateau orienté plein sud à 1500 m d’altitude, la station de ski d’Aussois séduit les familles en vacances à la neige. Son cadre reposant et traditionnel ainsi que les infrastructures et services réservés aux familles (station labélisée Famille Plus depuis 2006) sont ses véritables atouts.',
@@ -38,6 +37,7 @@ class SkiFixturesCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         // Generate stations
+        $output->write('Generating 3 stations... ');
         foreach($stations as $key => $value) {
             $station = new Station();
             $station->setName($value)
@@ -50,8 +50,10 @@ class SkiFixturesCommand extends ContainerAwareCommand
         }
 
         $em->flush();
+        $output->writeln('<info>OK</info>');
 
         // Generate users
+        $output->write('Generating 5 users... ');
         for($i = 0; $i <= 5; $i++) {
             $user = new User();
             $user->setFirstname('Test')
@@ -63,12 +65,15 @@ class SkiFixturesCommand extends ContainerAwareCommand
 
             $em->persist($user);
         }
+        $output->writeln('<info>OK</info>');
 
         // Generate reviews
+        $output->write('Generating 10 reviews... ');
         for($i = 0; $i <= 10; $i++) {
             $review = new Review();
             $review->setStation($em->getRepository(Station::class)->findOneById(rand(1, count($stations))))
                     ->setUser($user)
+                    ->setStatus(true)
                     ->setNotation(rand(1, 5))
                     ->setComment($comments[rand(1, count($comments))-1]);
 
@@ -76,10 +81,10 @@ class SkiFixturesCommand extends ContainerAwareCommand
         }
 
         $em->flush();
-        $output->writeln('<info>Generation OK.</info>');
+        $output->writeln('<info>OK</info>');
 
         // Clear avatars directory
-        $output->writeln('Clearing avatars directory...');
+        $output->write('Clearing avatars directory... ');
         $avatars_dir = $this->getContainer()->getParameter('avatars_directory');
         $c_del = 0;
         foreach(scandir($avatars_dir) as $key => $file) {
@@ -89,7 +94,7 @@ class SkiFixturesCommand extends ContainerAwareCommand
             }
         }
 
-        $output->writeln('<info>Cleared '.$c_del.' files.</info>');
+        $output->writeln('<info>OK ('.$c_del.' file(s) deleted)</info>');
     }
 
 }

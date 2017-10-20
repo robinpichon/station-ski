@@ -62,7 +62,7 @@ class RegisterController extends Controller
                             'text/html');
 
                 $this->get('mailer')->send($message);
-                $this->get('session')->getFlashBag()->add('success', 'Votre compte a été créé, vous pouvez désormais vous connecter.');
+                $this->get('session')->getFlashBag()->add('green', 'Votre compte a été créé, vous pouvez désormais vous connecter.');
                 return $this->redirectToRoute('login');
             } else {
                 $form->addError(new FormError('Erreur lors de la vérification reCAPTCHA. Veuillez réésayer.'));

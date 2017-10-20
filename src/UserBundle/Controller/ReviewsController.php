@@ -34,11 +34,11 @@ class ReviewsController extends Controller
         {
             $em->remove($review);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Commentaire supprimé avec succès.');
+            $this->get('session')->getFlashBag()->add('green', 'Commentaire supprimé avec succès.');
         }
         else
         {
-            $this->get('session')->getFlashBag()->add('error', 'Erreur lors de la suppression du commentaire.');
+            $this->get('session')->getFlashBag()->add('red', 'Erreur lors de la suppression du commentaire.');
         }
 
         return $this->redirectToRoute('account_reviews');
