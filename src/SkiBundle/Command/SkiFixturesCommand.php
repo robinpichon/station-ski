@@ -53,6 +53,7 @@ class SkiFixturesCommand extends ContainerAwareCommand
         $output->writeln('<info>OK</info>');
 
         // Generate users
+        $users = [];
         $output->write('Generating 5 users... ');
         for($i = 0; $i <= 5; $i++) {
             $user = new User();
@@ -63,6 +64,7 @@ class SkiFixturesCommand extends ContainerAwareCommand
                 ->setAvatar('default.png')
                 ->setRoles(['ROLE_USER']);
 
+            array_push($users, $user);
             $em->persist($user);
         }
         $output->writeln('<info>OK</info>');
@@ -72,7 +74,7 @@ class SkiFixturesCommand extends ContainerAwareCommand
         for($i = 0; $i <= 10; $i++) {
             $review = new Review();
             $review->setStation($em->getRepository(Station::class)->findOneById(rand(1, count($stations))))
-                    ->setUser($user)
+                    ->setUser($users[rand(1, count($users))-1])
                     ->setStatus(true)
                     ->setNotation(rand(1, 5))
                     ->setComment($comments[rand(1, count($comments))-1]);

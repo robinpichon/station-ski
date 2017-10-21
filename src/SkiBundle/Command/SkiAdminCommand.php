@@ -41,10 +41,9 @@ class SkiAdminCommand extends ContainerAwareCommand
         $em->persist($user);
         $em->flush();
         $output->writeln('<info>OK</info>');
-        
+
         $output->writeln('=============================================================');
         $output->writeln('Administrator account credentials');
-        $output->writeln('WARNING: IT\'S HIGHLY RECOMMENDED TO COPY THESE INFORMATIONS');
         $output->writeln('Email: <info>'.$email.'</info>');
         $output->writeln('Password: <info>'.$password.'</info>');
         $output->writeln('=============================================================');

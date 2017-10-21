@@ -45,10 +45,12 @@
     <div class="col l6">
       <h5>Avis ({{ reviews|length }})</h5>
 
-      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+      {% if is_granted('IS_AUTHENTICATED_FULLY') and not user_reviewed %}
           <a class="waves-effect waves-light btn-large modal-trigger" href="#newComment" style="width: 100%;">
-      {% else %}
+      {% elseif not is_granted('IS_AUTHENTICATED_FULLY') %}
           <a class="btn-large tooltipped" data-position="top" data-delay="50" data-tooltip="Vous devez être connecté pour écrire un commentaire." style="width: 100%; background-color: lightgrey;">
+      {% elseif user_reviewed %}
+          <a class="btn-large tooltipped" data-position="top" data-delay="50" data-tooltip="Vous avez déjà posté un commentaire." style="width: 100%; background-color: lightgrey;">
       {% endif %}
           <i class="material-icons left">edit</i>écrire un commentaire
       </a>

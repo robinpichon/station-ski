@@ -26,9 +26,14 @@ class DetailController extends Controller
 
       if($station !== null) {
           $reviews = [];
+          $user_reviewed = false;
+
           foreach($station->getReviews() as $review) {
               if($review->getStatus()) {
                   array_push($reviews, $review);
+              }
+              if($this->getUser() != null && $review->getUser()->getId() === $this->getUser()->getId()) {
+                  $user_reviewed = true;
               }
           }
 
@@ -68,6 +73,7 @@ class DetailController extends Controller
             'reviews' => $reviews,
             'moyenne' => $moyenne,
             'ratio' => $ratio['positive'],
+            'user_reviewed' => $user_reviewed,
             'mapurl' => $map->getMapUrl($station->getId()),
             'form' =>  $form->createView()
           ]);
