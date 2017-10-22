@@ -35,7 +35,7 @@ make start
 <h3>Admin accounts</h3>
 <p>
     Un compte administrateur est automatiquement créé à la fin du processus d'installation.<br>
-    Les identifiants aléatoires sont affichés sous cette forme quand l'installation se termine.<br>
+    Les identifiants générés aléatoirement sont affichés sous cette forme quand l'installation se termine.<br>
     <i>An admin account is automaticaly created at the end of the install process.<br>
     Random credentials are displayed like this when install ends.</i>
 </p>
