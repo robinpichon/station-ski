@@ -18,7 +18,7 @@ vagrant ssh
 </p>
 <pre>
 mkdir criticski && cd criticski
-git clone git@github.com:robinpichon/station-ski.git
+git clone https://github.com/robinpichon/station-ski.git
 </pre>
 <p>
     Exécutez l'installateur du projet et lancez le serveur web.<br>
