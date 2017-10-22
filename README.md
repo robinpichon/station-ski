@@ -94,3 +94,16 @@ make fixtures
 <pre>
 make admin
 </pre>
+<h3>TODO</h3>
+General
+<ul>
+    <li>Implement TripAdvisor API</li>
+</ul>
+User
+<ul>
+    <li>Review edit</li>
+</ul>
+Admin
+<ul>
+    <li>User edit</li>
+</ul>
