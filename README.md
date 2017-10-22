@@ -3,7 +3,7 @@
     Site de notation de stations de ski pour mieux choisir son séjour en fonctions de ses critères et préférences.<br>
     <i>Review website for ski resorts to better choose your stay according to its criteria and preferences.</i>
 </p>
-<h3>Prequisites</h3>
+<h3>Prerequisites</h3>
 <ul>
     <li>MySQL server</li>
     <li>PHP 7.0+</li>
