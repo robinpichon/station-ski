@@ -3,6 +3,12 @@
     Site de notation de stations de ski pour mieux choisir son séjour en fonctions de ses critères et préférences.<br>
     <i>Review website for ski resorts to better choose your stay according to its criteria and preferences.</i>
 </p>
+<h3>Prequisites</h3>
+<ul>
+    <li>PHP 7.0+</li>
+    <li>Composer</li>
+    <li>Git</li>
+</ul>
 <h3>Setup</h3>
 <p>
     Si vous utilisez une machine virtuelle vagrant, vérifiez qu'elle soit lancée et connectez-vous en SSH.<br>
