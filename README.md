@@ -9,26 +9,48 @@
     <i>If you're using a vagrant virtual machine, make sure it's up and connect to SSH.</i>
 </p>
 <pre>
-    vagrant up
-    vagrant ssh
+vagrant up
+vagrant ssh
 </pre>
 <p>
     Créez un répertoire de projet et clonez le répertoire git.<br>
     <i>Create a project dir and clone the git repository.</i>
 </p>
 <pre>
-    mkdir criticski && cd criticski
-    git clone git@github.com:robinpichon/station-ski.git
+mkdir criticski && cd criticski
+git clone git@github.com:robinpichon/station-ski.git
 </pre>
 <p>
     Exécutez l'installateur du projet et lancez le serveur web.<br>
     <i>Execute project install and start web server.</i>
 </p>
 <pre>
-    make install
-    make start
+make install
+make start
 </pre>
 <p>
     Le site devrait être disponible à l'adresse <a href="http://localhost:1337">http://localhost:1337</a>.<br>
     <i>The website must be available from address <a href="http://localhost:1337">http://localhost:1337</a>.</i>
 </p>
+<h3>Admin accounts</h3>
+<p>
+    Un compte administrateur est automatiquement créé à la fin du processus d'installation.<br>
+    Les identifiants aléatoires sont affichés sous cette forme quand l'installation se termine.<br>
+    <i>An admin account is automaticaly created at the end of the install process.<br>
+    Random credentials are displayed like this when install ends.</i>
+</p>
+<pre>
+Generating admin account... OK
+=============================================================
+Administrator account credentials
+Email: admin_xxxxxxxxx@admin.fr
+Password: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+=============================================================
+</pre>
+<p>
+    Vous pouvez créer autant de comptes administrateur que vous le souhaitez en utilisant la commande<br>
+    <i>You can create as many admin accounts as you want by using the command</i>
+</p>
+<pre>
+make admin
+</pre>
