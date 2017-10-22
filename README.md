@@ -56,14 +56,14 @@ make admin
 </pre>
 <h3>Make commands</h3>
 <p>
-    Démarrer le serveur web.
+    Démarrer le serveur web.<br>
     <i>Start web server.</i>
 </p>
 <pre>
 make start
 </pre>
 <p>
-    Arrêter le serveur web.
+    Arrêter le serveur web.<br>
     <i>Stop web server.</i>
 </p>
 <pre>
@@ -88,7 +88,7 @@ make stop
 make fixtures
 </pre>
 <p>
-    Créer un compte administrateur.
+    Créer un compte administrateur.<br>
     <i>Create admin account.</i>
 </p>
 <pre>
