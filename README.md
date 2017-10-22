@@ -6,7 +6,7 @@
 <h3>Prerequisites</h3>
 <ul>
     <li>MySQL server</li>
-    <li>PHP 7.0+</li>
+    <li>PHP 7.1+</li>
     <li>Composer</li>
     <li>Git</li>
 </ul>
