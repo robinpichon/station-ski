@@ -1,10 +1,34 @@
 <h1>CriticSki</h1>
-<p>Site de notation de stations de ski pour mieux choisir son séjour en fonctions de ses critères et préférences.</p>
+<p>
+    Site de notation de stations de ski pour mieux choisir son séjour en fonctions de ses critères et préférences.<br>
+    <i>Review website for ski resorts to better choose your stay according to its criteria and preferences.</i>
+</p>
 <h3>Setup</h3>
-<pre>git clone git@github.com:robinpichon/station-ski.git
-vagrant up
-vagrant ssh
-make install
-make start</pre>
-<p>Le site devrait être disponible à l'adresse <a href="http://localhost:1337">http://localhost:1337</a>.</p>
-</article>
+<p>
+    Si vous utilisez une machine virtuelle vagrant, vérifiez qu'elle soit lancée et connectez-vous en SSH.<br>
+    <i>If you're using a vagrant virtual machine, make sure it's up and connect to SSH.</i>
+</p>
+<pre>
+    vagrant up
+    vagrant ssh
+</pre>
+<p>
+    Créez un répertoire de projet et clonez le répertoire git.<br>
+    <i>Create a project dir and clone the git repository.</i>
+</p>
+<pre>
+    mkdir criticski && cd criticski
+    git clone git@github.com:robinpichon/station-ski.git
+</pre>
+<p>
+    Exécutez l'installateur du projet et lancez le serveur web.<br>
+    <i>Execute project install and start web server.</i>
+</p>
+<pre>
+    make install
+    make start
+</pre>
+<p>
+    Le site devrait être disponible à l'adresse <a href="http://localhost:1337">http://localhost:1337</a>.<br>
+    <i>The website must be available from address <a href="http://localhost:1337">http://localhost:1337</a>.</i>
+</p>
