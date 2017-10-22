@@ -54,3 +54,43 @@ Password: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 <pre>
 make admin
 </pre>
+<h3>Make commands</h3>
+<p>
+    Démarrer le serveur web.
+    <i>Start web server.</i>
+</p>
+<pre>
+make start
+</pre>
+<p>
+    Arrêter le serveur web.
+    <i>Stop web server.</i>
+</p>
+<pre>
+make stop
+</pre>
+<p>
+    Appliquer le jeu d'essai.<br>
+    <i>
+        Apply fixtures.<br>
+        <ul>
+            <li>(Re)create database</li>
+            <li>Update database schema</li>
+            <li>Install assets</li>
+            <li>Generate stations</li>
+            <li>Generate users</li>
+            <li>Generate reviews</li>
+            <li>Clear avatars directory</li>
+        </ul>
+    </i>
+</p>
+<pre>
+make fixtures
+</pre>
+<p>
+    Créer un compte administrateur.
+    <i>Create admin account.</i>
+</p>
+<pre>
+make admin
+</pre>

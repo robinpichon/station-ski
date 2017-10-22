@@ -7,7 +7,6 @@ stop:
 install:
 	composer install
 	make fixtures
-	make admin
 
 fixtures:
 	bin/console doctrine:database:drop --force
