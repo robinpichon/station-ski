@@ -13,8 +13,8 @@ vagrant up
 vagrant ssh
 </pre>
 <p>
-    Créez un répertoire de projet et clonez le répertoire git.<br>
-    <i>Create a project dir and clone the git repository.</i>
+    Clonez le répertoire git et placez-vous dans le dossier de projet.<br>
+    <i>Clone git repository and get in project folder.</i>
 </p>
 <pre>
 git clone https://github.com/robinpichon/station-ski.git criticski
